@@ -1,3 +1,15 @@
 {
-	"State": "Состояние"
+	"State": "Состояние",
+	"Lasthit marker": "Ластхит маркер",
+	"Rounding": "Скругление",
+	"Ability size": "Размер способностей",
+	"Disable abilities": "Отключить способности",
+	"Show (abilities)": "Показывать (способности)",
+	"Show (avg damage)": "Показывать (средний урон)",
+	"Rounding abilities (img)": "Скругление способностей (изобр.)",
+	"Disable show abilities\nafter X minutes": "Отключить отображение способностей\nпосле X минут",
+	"Abilities": "Способности",
+	"Items": "Предметы",
+	"Requires lobby and hero": "Требуется лобби и герой",
+	"For settings abilities or items, you must be in a lobby\nand have a hero selected which support\nabilities or items (e.g dagon)": "Для настройки способностей или предметов\nвы должны находиться в лобби и выбрать героя\nподдерживающего способности или предметы (например, дагон)"
 }
