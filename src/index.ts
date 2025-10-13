@@ -9,6 +9,10 @@ import {
 	GameState,
 	Lantern,
 	Miniboss,
+	npc_dota_brewmaster_earth,
+	npc_dota_brewmaster_fire,
+	npc_dota_brewmaster_storm,
+	npc_dota_brewmaster_void,
 	Outpost,
 	TwinGate,
 	Unit
@@ -23,6 +27,7 @@ new (class CLastHitMarker {
 	private readonly units: BaseModel[] = []
 	private readonly menu = new MenuManager()
 	private readonly abilityManager = new AbilityManager(this.menu)
+	private readonly exludedEntities = new Set(["npc_dota_unit_undying_zombie_torso"])
 
 	constructor() {
 		EventsSDK.on("Draw", this.Draw.bind(this))
@@ -116,7 +121,7 @@ new (class CLastHitMarker {
 		}
 	}
 	private shouldUnit(entity: Entity): entity is Unit {
-		if (!(entity instanceof Unit) || entity.IsRoshan) {
+		if (!(entity instanceof Unit) || entity.IsRoshan || entity.IsCourier) {
 			return false
 		}
 		if (entity instanceof Miniboss || entity instanceof Outpost) {
@@ -125,9 +130,20 @@ new (class CLastHitMarker {
 		if (entity instanceof TwinGate || entity instanceof Lantern) {
 			return false
 		}
-		if (entity.Name.startsWith("npc_dota_brewmaster_")) {
+		if (this.exludedEntities.has(entity.Name)) {
 			return false
 		}
-		return entity.IsCreep || entity.IsBuilding
+		if (
+			entity instanceof npc_dota_brewmaster_void ||
+			entity instanceof npc_dota_brewmaster_fire ||
+			entity instanceof npc_dota_brewmaster_storm ||
+			entity instanceof npc_dota_brewmaster_earth
+		) {
+			return false
+		}
+		return (
+			!this.exludedEntities.has(entity.Name) &&
+			(entity.IsCreep || entity.IsBuilding)
+		)
 	}
 })()
