@@ -13,10 +13,6 @@ import { BaseModel } from "./model"
 export class GUIMarker {
 	private static readonly border = 2
 	private static readonly minSize = 17
-	private static readonly allyColor = new Color(0, 100, 0)
-	private static readonly allyColorKill = new Color(124, 252, 0)
-	private static readonly enemyColor = new Color(139, 0, 0)
-	private static readonly enemyColorKill = new Color(255, 69, 0)
 
 	private readonly position = new Rectangle()
 	private readonly size = new Vector2()
@@ -69,11 +65,11 @@ export class GUIMarker {
 			minPct = minDamage / target.Base.MaxHP,
 			avgDamage = source.AvgDamage(target),
 			avgPct = avgDamage / target.Base.MaxHP
-		let colorBar = this.getColorBar(target)
+		let colorBar = this.getColorBar(target, menu)
 		if (isAVG && minDamage < currHP && avgDamage >= currHP) {
 			colorBar = Color.Yellow
 		} else if (minDamage >= currHP && (target.IsEnemy() || target.IsDeniable)) {
-			colorBar = this.getColorBar(target, true)
+			colorBar = this.getColorBar(target, menu, true)
 		}
 		const totalPct = isAVG ? avgPct : minPct
 		position.Width *= Math.min(totalPct, target.Base.HPPercentDecimal)
@@ -81,10 +77,10 @@ export class GUIMarker {
 		RendererSDK.FilledRect(position.pos1, position.Size, colorBar)
 	}
 
-	private getColorBar(entity: BaseModel, kill?: boolean) {
+	private getColorBar(entity: BaseModel, menu: MenuManager, kill?: boolean) {
 		const map = !entity.IsEnemy()
-			? [GUIMarker.allyColor, GUIMarker.allyColorKill]
-			: [GUIMarker.enemyColor, GUIMarker.enemyColorKill]
+			? [menu.AllyColorInactive.SelectedColor, menu.AllyColorActive.SelectedColor]
+			: [menu.EnemyColorInactive.SelectedColor, menu.EnemyColorActive.SelectedColor]
 		return kill ? map[1] : map[0]
 	}
 	private getPosition(
