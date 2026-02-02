@@ -1,10 +1,15 @@
-import { GameState, Menu } from "github.com/octarine-public/wrapper/index"
+import { Color, GameState, Menu } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
 	public readonly State: Menu.Toggle
 	public readonly StateAVG: Menu.Toggle
 	public readonly Rounding: Menu.Slider
 	public readonly AbilitySize: Menu.Slider
+
+	public readonly AllyColorInactive: Menu.ColorPicker
+	public readonly AllyColorActive: Menu.ColorPicker
+	public readonly EnemyColorInactive: Menu.ColorPicker
+	public readonly EnemyColorActive: Menu.ColorPicker
 
 	private readonly abilityState: Menu.Toggle
 	private readonly abilityStateByTime: Menu.Slider
@@ -24,6 +29,24 @@ export class MenuManager {
 		this.State = this.node.AddToggle("State", true)
 		this.abilityState = this.node.AddToggle("Show (abilities)", true)
 		this.StateAVG = this.node.AddToggle("Show (avg damage)", false)
+
+		const colorsNode = this.node.AddNode("Colors")
+		this.AllyColorInactive = colorsNode.AddColorPicker(
+			"Ally inactive",
+			new Color(0, 100, 0)
+		)
+		this.AllyColorActive = colorsNode.AddColorPicker(
+			"Ally active",
+			new Color(124, 252, 0)
+		)
+		this.EnemyColorInactive = colorsNode.AddColorPicker(
+			"Enemy inactive",
+			new Color(139, 0, 0)
+		)
+		this.EnemyColorActive = colorsNode.AddColorPicker(
+			"Enemy active",
+			new Color(255, 69, 0)
+		)
 
 		this.info = this.node.AddShortDescription(
 			"Requires lobby and hero",
