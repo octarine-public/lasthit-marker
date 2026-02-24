@@ -13,6 +13,7 @@ import { BaseModel } from "./model"
 export class GUIMarker {
 	private static readonly border = 2
 	private static readonly minSize = 17
+	private static readonly starPath = "icons/star.svg"
 
 	private readonly position = new Rectangle()
 	private readonly size = new Vector2()
@@ -57,6 +58,33 @@ export class GUIMarker {
 			)
 		}
 	}
+	public DrawIndicator(source: BaseModel, target: BaseModel, menu: MenuManager) {
+		const rectangle = this.position
+		const isAVG = menu.StateAVG.value
+		const currHP = target.HP
+		const minDamage = source.MinDamage(target)
+		const avgDamage = source.AvgDamage(target)
+
+		let color: Color
+		if (minDamage >= currHP) {
+			color = menu.IndicatorColorKill.SelectedColor
+		} else if (isAVG && avgDamage >= currHP) {
+			color = menu.IndicatorColorAvg.SelectedColor
+		} else {
+			color = menu.IndicatorColorNoKill.SelectedColor
+		}
+
+		const sz = menu.IndicatorSize.value
+		const iconSize = GUIInfo.ScaleVector(sz, sz)
+		const gap = GUIInfo.ScaleHeight(2)
+		const centerX = rectangle.x + rectangle.Width / 2
+		const posX = Math.round(centerX - iconSize.x / 2)
+		const posY = Math.round(rectangle.y - iconSize.y - gap)
+		const pos = new Vector2(posX, posY)
+
+		RendererSDK.Image(GUIMarker.starPath, pos, -1, iconSize, color)
+	}
+
 	public DrawAttack(source: BaseModel, target: BaseModel, menu: MenuManager) {
 		const position = this.position.Clone()
 		const isAVG = menu.StateAVG.value,

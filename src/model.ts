@@ -44,14 +44,19 @@ export class BaseModel {
 			if (this.CanAttack(target)) {
 				this.gui.DrawAttack(this, target, menu)
 			}
-			if (!menu.AbilityState || !target.IsEnemy() || target.Base.IsBuilding) {
-				continue
+			if (menu.AbilityState && target.IsEnemy() && !target.Base.IsBuilding) {
+				const abilities = this.abilities.filter(x =>
+					this.isValidSpell(x, target, menu)
+				)
+				if (abilities.length !== 0) {
+					this.gui.DrawAbilities(abilities, menu)
+				}
 			}
-			const abilities = this.abilities.filter(x =>
-				this.isValidSpell(x, target, menu)
-			)
-			if (abilities.length !== 0) {
-				this.gui.DrawAbilities(abilities, menu)
+			const showIndicator = target.Base.IsBuilding
+				? menu.IndicatorTowers.value
+				: menu.IndicatorState.value
+			if (showIndicator && (target.IsEnemy() || target.IsDeniable)) {
+				this.gui.DrawIndicator(this, target, menu)
 			}
 		}
 	}

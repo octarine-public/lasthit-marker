@@ -3,6 +3,9 @@ import { Color, GameState, Menu } from "github.com/octarine-public/wrapper/index
 export class MenuManager {
 	public readonly State: Menu.Toggle
 	public readonly StateAVG: Menu.Toggle
+	public readonly IndicatorState: Menu.Toggle
+	public readonly IndicatorTowers: Menu.Toggle
+	public readonly IndicatorSize: Menu.Slider
 	public readonly Rounding: Menu.Slider
 	public readonly AbilitySize: Menu.Slider
 
@@ -10,6 +13,10 @@ export class MenuManager {
 	public readonly AllyColorActive: Menu.ColorPicker
 	public readonly EnemyColorInactive: Menu.ColorPicker
 	public readonly EnemyColorActive: Menu.ColorPicker
+
+	public readonly IndicatorColorKill: Menu.ColorPicker
+	public readonly IndicatorColorAvg: Menu.ColorPicker
+	public readonly IndicatorColorNoKill: Menu.ColorPicker
 
 	private readonly abilityState: Menu.Toggle
 	private readonly abilityStateByTime: Menu.Slider
@@ -29,6 +36,19 @@ export class MenuManager {
 		this.State = this.node.AddToggle("State", true)
 		this.abilityState = this.node.AddToggle("Show (abilities)", true)
 		this.StateAVG = this.node.AddToggle("Show (avg damage)", false)
+		this.IndicatorState = this.node.AddToggle("Show (indicator)", false)
+		this.IndicatorTowers = this.node.AddToggle("Show (indicator towers)", true)
+
+		const arrIndicatorSize = [10, 6, 20, 0, "Indicator icon size"] as const
+		this.IndicatorSize = this.node.AddSlider("Indicator size", ...arrIndicatorSize)
+		this.IndicatorSize.IsHidden = true
+
+		const updateIndicatorSize = () => {
+			this.IndicatorSize.IsHidden =
+				!this.IndicatorState.value && !this.IndicatorTowers.value
+		}
+		this.IndicatorState.OnValue(updateIndicatorSize)
+		this.IndicatorTowers.OnValue(updateIndicatorSize)
 
 		const colorsNode = this.node.AddNode("Colors")
 		this.AllyColorInactive = colorsNode.AddColorPicker(
@@ -46,6 +66,19 @@ export class MenuManager {
 		this.EnemyColorActive = colorsNode.AddColorPicker(
 			"Enemy active",
 			new Color(255, 69, 0)
+		)
+
+		this.IndicatorColorKill = colorsNode.AddColorPicker(
+			"Indicator kill",
+			new Color(0, 255, 0)
+		)
+		this.IndicatorColorAvg = colorsNode.AddColorPicker(
+			"Indicator avg",
+			new Color(255, 255, 0)
+		)
+		this.IndicatorColorNoKill = colorsNode.AddColorPicker(
+			"Indicator no kill",
+			new Color(255, 0, 0)
 		)
 
 		this.info = this.node.AddShortDescription(
@@ -126,7 +159,9 @@ export class MenuManager {
 	}
 	private addItemToSelector(selector: Menu.ImageSelector, name: string) {
 		selector.values.push(name)
-		selector.enabledValues.set(name, false)
+		if (!selector.enabledValues.has(name)) {
+			selector.enabledValues.set(name, true)
+		}
 		this.cachedNames.push(name)
 		this.updateVisibleSelector()
 	}
