@@ -56,7 +56,17 @@ export class BaseModel {
 				? menu.IndicatorTowers.value
 				: menu.IndicatorState.value
 			if (showIndicator && (target.IsEnemy() || target.IsDeniable)) {
-				this.gui.DrawIndicator(this, target, menu)
+				if (target.Base.IsBuilding) {
+					const currHP = target.HP
+					const canKill =
+						this.MinDamage(target) >= currHP ||
+						(menu.StateAVG.value && this.AvgDamage(target) >= currHP)
+					if (canKill) {
+						this.gui.DrawIndicator(this, target, menu)
+					}
+				} else {
+					this.gui.DrawIndicator(this, target, menu)
+				}
 			}
 		}
 	}
