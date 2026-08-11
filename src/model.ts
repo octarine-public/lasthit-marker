@@ -1,8 +1,3 @@
-import {
-	Ability,
-	ATTACK_DAMAGE_STRENGTH,
-	Unit
-} from "github.com/octarine-public/wrapper/index"
 
 import { GUIMarker } from "./gui"
 import { MenuManager } from "./menu"

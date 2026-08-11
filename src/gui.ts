@@ -1,11 +1,3 @@
-import {
-	Ability,
-	Color,
-	GUIInfo,
-	Rectangle,
-	RendererSDK,
-	Vector2
-} from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
 import { BaseModel } from "./model"

@@ -1,23 +1,5 @@
 import "./translations"
 
-import {
-	DOTAGameState,
-	DOTAGameUIState,
-	Entity,
-	EventsSDK,
-	GameRules,
-	GameState,
-	Lantern,
-	Miniboss,
-	npc_dota_brewmaster_earth,
-	npc_dota_brewmaster_fire,
-	npc_dota_brewmaster_storm,
-	npc_dota_brewmaster_void,
-	Outpost,
-	TwinGate,
-	Unit
-} from "github.com/octarine-public/wrapper/index"
-
 import { AbilityManager } from "./manager"
 import { MenuManager } from "./menu"
 import { BaseModel } from "./model"
@@ -45,8 +27,8 @@ new (class CLastHitMarker {
 	}
 	private get isPostGame() {
 		return (
-			GameRules === undefined ||
-			GameRules.GameState === DOTAGameState.DOTA_GAMERULES_STATE_POST_GAME
+			Dota2SDK.GameRules === undefined ||
+			Dota2SDK.GameRules.GameState === DOTAGameState.DOTA_GAMERULES_STATE_POST_GAME
 		)
 	}
 	private isValid(entity: Unit) {

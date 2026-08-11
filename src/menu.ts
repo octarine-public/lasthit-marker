@@ -1,4 +1,3 @@
-import { Color, GameState, Menu } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
 	public readonly State: Menu.Toggle
