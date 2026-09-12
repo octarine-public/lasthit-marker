@@ -1,4 +1,4 @@
-
+import { canvas } from "../render"
 import { MenuManager } from "./menu"
 import { BaseModel } from "./model"
 
@@ -30,7 +30,7 @@ export class GUIMarker {
 	public DrawAbilities(abilities: Ability[], menu: MenuManager) {
 		const vecSize = this.size,
 			rectangle = this.position,
-			border = GUIInfo.ScaleHeight(GUIMarker.border + 1), // 2 + 1
+			border = GUIInfo.ScaleHeight(GUIMarker.border + 1),
 			rounding = this.getRounding(menu, vecSize)
 		for (let index = abilities.length - 1; index > -1; index--) {
 			const spell = abilities[index]
@@ -74,7 +74,7 @@ export class GUIMarker {
 		const posY = Math.round(rectangle.y - iconSize.y - gap)
 		const pos = new Vector2(posX, posY)
 
-		RendererSDK.Image(GUIMarker.starPath, pos, -1, iconSize, color)
+		canvas.Image(GUIMarker.starPath, pos, iconSize, { color })
 	}
 
 	public DrawAttack(source: BaseModel, target: BaseModel, menu: MenuManager) {
@@ -94,7 +94,7 @@ export class GUIMarker {
 		const totalPct = isAVG ? avgPct : minPct
 		position.Width *= Math.min(totalPct, target.Base.HPPercentDecimal)
 		position.Width = Math.ceil(position.Width * 20) / 20
-		RendererSDK.FilledRect(position.pos1, position.Size, colorBar)
+		canvas.Rect(position.pos1, position.Size, { color: colorBar })
 	}
 
 	private getColorBar(entity: BaseModel, menu: MenuManager, kill?: boolean) {
@@ -124,15 +124,17 @@ export class GUIMarker {
 		rounding: number,
 		border: number
 	) {
-		RendererSDK.RectRounded(
-			vecPos,
-			vecSize,
-			rounding,
-			Color.fromUint32(0),
-			Color.Green.SetA(180),
-			Math.round(border)
-		)
-		RendererSDK.Image(texture, vecPos, rounding, vecSize, Color.White)
+		canvas.Rect(vecPos, vecSize, {
+			color: Color.fromUint32(0),
+			borderColor: Color.Green.SetA(180),
+			borderWidth: Math.round(border),
+			radius: Math.max(rounding / 2, 0)
+		})
+		canvas.Image(texture, vecPos, vecSize, {
+			color: Color.White,
+			radius: Math.max(rounding / 2, 0),
+			circle: rounding === 0
+		})
 	}
 	private getRounding(menu: MenuManager, size: Vector2): number {
 		const rnd = (menu.Rounding.value / 10) * Math.min(size.x, size.y)
