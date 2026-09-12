@@ -32,5 +32,9 @@
 		"type": "git",
 		"directory": "/",
 		"url": "https://github.com/octarine-public/lasthit-marker.git"
-	}
+	},
+	"octarineBundle": true,
+	"octarineMinimize": true,
+	"octarineObfuscate": true,
+	"octarineTreeShaking": true
 }
