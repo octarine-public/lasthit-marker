@@ -1,7 +1,8 @@
 import { GUIMarker } from "./gui"
 import { MenuManager } from "./menu"
+import { MarkerTarget } from "./types"
 
-export class BaseModel {
+export class BaseModel implements MarkerTarget {
 	private static readonly minRange = 2500
 
 	private abilities: Ability[] = []

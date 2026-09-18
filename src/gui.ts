@@ -1,6 +1,6 @@
 import { canvas } from "../render"
 import { MenuManager } from "./menu"
-import { BaseModel } from "./model"
+import { MarkerTarget } from "./types"
 
 export class GUIMarker {
 	private static readonly border = 2
@@ -50,7 +50,7 @@ export class GUIMarker {
 			)
 		}
 	}
-	public DrawIndicator(source: BaseModel, target: BaseModel, menu: MenuManager) {
+	public DrawIndicator(source: MarkerTarget, target: MarkerTarget, menu: MenuManager) {
 		const rectangle = this.position
 		const isAVG = menu.StateAVG.value
 		const currHP = target.HP
@@ -77,7 +77,7 @@ export class GUIMarker {
 		canvas.Image(GUIMarker.starPath, pos, iconSize, { color })
 	}
 
-	public DrawAttack(source: BaseModel, target: BaseModel, menu: MenuManager) {
+	public DrawAttack(source: MarkerTarget, target: MarkerTarget, menu: MenuManager) {
 		const position = this.position.Clone()
 		const isAVG = menu.StateAVG.value,
 			currHP = target.HP,
@@ -97,7 +97,7 @@ export class GUIMarker {
 		canvas.Rect(position.pos1, position.Size, { color: colorBar })
 	}
 
-	private getColorBar(entity: BaseModel, menu: MenuManager, kill?: boolean) {
+	private getColorBar(entity: MarkerTarget, menu: MenuManager, kill?: boolean) {
 		const map = !entity.IsEnemy()
 			? [menu.AllyColorInactive.SelectedColor, menu.AllyColorActive.SelectedColor]
 			: [menu.EnemyColorInactive.SelectedColor, menu.EnemyColorActive.SelectedColor]
