@@ -1,4 +1,3 @@
-
 export class MenuManager {
 	public readonly State: Menu.Toggle
 	public readonly StateAVG: Menu.Toggle

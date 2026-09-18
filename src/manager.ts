@@ -1,4 +1,3 @@
-
 import { MenuManager } from "./menu"
 
 export class AbilityManager {
