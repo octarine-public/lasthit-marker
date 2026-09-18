@@ -1,1 +1,20 @@
-{}
+{
+	"State": "启用",
+	"Lasthit marker": "补刀标记",
+	"Rounding": "圆角",
+	"Ability size": "技能图标大小",
+	"Disable abilities": "禁用技能",
+	"Show (abilities)": "显示（技能）",
+	"Show (avg damage)": "显示（平均伤害）",
+	"Rounding abilities (img)": "技能图标圆角",
+	"Disable show abilities\nafter X minutes": "在 X 分钟后\n停止显示技能",
+	"Abilities": "技能",
+	"Items": "物品",
+	"Requires lobby and hero": "需要进入游戏并选择英雄",
+	"For settings abilities or items, you must be in a lobby\nand have a hero selected which support\nabilities or items (e.g dagon)": "要设置技能或物品，你必须处于游戏中，\n并选择一个拥有相应技能或物品的英雄\n（例如达贡之神力）",
+	"Colors": "颜色",
+	"Ally inactive": "友方（未激活）",
+	"Ally active": "友方（激活）",
+	"Enemy inactive": "敌方（未激活）",
+	"Enemy active": "敌方（激活）"
+}
